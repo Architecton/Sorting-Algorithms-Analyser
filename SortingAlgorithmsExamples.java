@@ -127,11 +127,11 @@ class SortingAlgorithms {
 
 		// while pointers have not met
 		while(l <= r) {
-			// while value pointed to by l is smaller than pivot, move pointer left
+			// while value pointed to by l is smaller/larger than pivot, move pointer left
 			while((up) ? arr[l] < pivot : arr[l] > pivot) {
 				l++;
 			}
-			// while vale pointed to by r is larger than pivot, move pointer right
+			// while vale pointed to by r is larger/smaller than pivot, move pointer right
 			while((up) ? arr[r] > pivot : arr[r] < pivot) {
 				r--;
 			}
@@ -169,7 +169,7 @@ class SortingAlgorithms {
 		int leftChild = 2*rootIndex + 1;
 		int rightChild = 2*rootIndex + 2;
 
-		// check if any child is than root and let critical point to critical child
+		// check if any child is more critical than root let critical point to critical child
 		if(leftChild < rightBound && ((up) ? arr[leftChild] > arr[critical] : arr[leftChild] < arr[critical])) {
 			critical = leftChild;
 		}
@@ -191,7 +191,7 @@ class SortingAlgorithms {
 			// initialize new variable used for insertion
 			int j = i;
 			// while current element is larger than its predecessor
-			while(j > 0 && (up) ? arr[j] < arr[j - 1] : arr[j] > arr[j - 1]) {
+			while(j > 0 && ((up) ? arr[j] < arr[j - 1] : arr[j] > arr[j - 1])) {
 				// swap the two elements and repeat for element originaly pointed to by i
 				swap(arr, j, j - 1);
 				j--;
@@ -216,11 +216,11 @@ class SortingAlgorithms {
 	public static void selectionsort(int[] arr, boolean up) {
 		// outer loop is at boundary of sorted and unsorted part
 		for(int i = 0; i < arr.length - 1; i++) {
-			// save assumed minimum value and its index
+			// save assumed critical value and its index
 			int critical = arr[i];
 			int indexCritical = i;
 
-			// go over unsorted part and check if any values are smaller than assumed minimum
+			// go over unsorted part and check if any values are smaller than assumed critical
 			for(int j = i + 1; j < arr.length; j++) {
 				if((up) ? arr[j] < critical : arr[j] > critical) {
 					critical = arr[j];
