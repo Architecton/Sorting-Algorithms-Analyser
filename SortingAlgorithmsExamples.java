@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class SortingAlgorithmsExamples {
 	// This program should accept 3 arguments and an optional 4. argument
@@ -10,55 +11,37 @@ public class SortingAlgorithmsExamples {
 	// the array is to be read from the standard input using .nextInt() method of a Scanner instance
 	// if no array length is given the array should be allocated dynamically.
 	public static void main(String[] args) {
-		// parsing array data //////////////////
-		Scanner sc = new Scanner(System.in);
-		int length, min, max;
-		System.out.println("Enter length of array to sort: ");
-		length = sc.nextInt();
-		System.out.println("Enter interval of values in array: ");
-		min = sc.nextInt();
-		max = sc.nextInt();
-		int[] arr = dataGenerator.generateUnsortedArray(length, min, max);
-		
-		// initialize swap counter to 0
-		SortingAlgorithms.swapCounter = 0;
-
-		System.out.printf("Array before sorting:%n");
-		printArray(arr);
-
-		byte algorithmToUse;
-		System.out.println("Select the algorithm to use to sort the array:");
-		System.out.printf("1 - quicksort%n2 - heapsort%n3 - insertionsort%n4 - selectionsort%n5 - bubblesort%n");
-		algorithmToUse = sc.nextByte();
-
-		switch(algorithmToUse) {
-			case 1:
-				System.out.println("Performing quicksort algorithm...");
-				SortingAlgorithms.quicksort(arr, 0, arr.length - 1);
-				break;
-			case 2:
-				System.out.println("Performing heapsort algorithm...");
-				SortingAlgorithms.heapsort(arr);
-				break;
-			case 3:
-				System.out.println("Performing insertionsort algorithm...");
-				SortingAlgorithms.insertionsort(arr);
-				break;
-			case 4:
-				System.out.println("Performing selectionsort algorithm...");
-				SortingAlgorithms.selectionsort(arr);
-			case 5:
-				System.out.println("Performing bubblesort algorithm...");
-				SortingAlgorithms.bubblesort(arr);
-				break;
-			default :
-				System.out.println("unknown algorithm index");
-				System.exit(1);
+		// parse arguments /////////
+		int arrLength = -1;
+		String outputAction = args[0];
+		String algorithm = args[1];
+		String sortDirection = args[2];
+		if(args.length == 4) {
+			arrLength = Integer.parseInt(args[3]);
 		}
-
-		System.out.printf("Array after sorting:%n");
+		////////////////////////////
+		
+		// parse the array /////////
+		Scanner sc = new Scanner(System.in);
+		int[] arr;
+		// if length is known in advance
+		if(arrLength != -1) {
+			arr = new int[arrLength];
+			for(int i = 0; i < arr.length; i++) {
+				arr[i] = sc.nextInt();
+			}
+		// else, read into ArrayList and then convert to array of primitive ints
+		} else {
+			ArrayList<Integer> temp = new ArrayList<Integer>();
+			while(sc.hasNextInt()) {
+				temp.add(sc.nextInt());
+			}
+			arr = temp.stream().mapToInt(i -> i).toArray();
+		}
+		// test print of parsed arr //////////////
 		printArray(arr);
-		System.out.printf("Number of swap operations performed: %d\n", SortingAlgorithms.swapCounter);
+		//////////////////////////////////////////
+		
 	}
 
 	// printArray: prints array of integers arr
