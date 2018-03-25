@@ -70,7 +70,7 @@ public class SortingAlgorithmsExamples {
 				break;
 			// quicksort
 			case "qs":
-				SortingAlgorithms.quicksort(arr, 0, arr.length, up);
+				SortingAlgorithms.quicksort(arr, 0, arr.length - 1, up);
 				printArray(arr);
 				break;
 			// mergesort
@@ -131,7 +131,7 @@ class SortingAlgorithms {
 			while((up) ? arr[l] < pivot : arr[l] > pivot) {
 				l++;
 			}
-			// while vale pointed to by l is smaller than pivot, move pointer right
+			// while vale pointed to by r is larger than pivot, move pointer right
 			while((up) ? arr[r] > pivot : arr[r] < pivot) {
 				r--;
 			}
@@ -170,10 +170,10 @@ class SortingAlgorithms {
 		int rightChild = 2*rootIndex + 2;
 
 		// check if any child is than root and let critical point to critical child
-		if(leftChild < rightBound && (up) ? arr[leftChild] > arr[critical] : arr[leftChild] < arr[critical]) {
+		if(leftChild < rightBound && ((up) ? arr[leftChild] > arr[critical] : arr[leftChild] < arr[critical])) {
 			critical = leftChild;
 		}
-		if(rightChild < rightBound && (up) ? arr[rightChild] > arr[critical] : arr[rightChild] < arr[critical]) {
+		if(rightChild < rightBound && ((up) ? arr[rightChild] > arr[critical] : arr[rightChild] < arr[critical])) {
 			critical = rightChild;
 		}
 		// if root is not critical, swap and recursively fix heap with root at critical child
