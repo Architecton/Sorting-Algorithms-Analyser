@@ -47,7 +47,45 @@ public class SortingAlgorithmsExamples {
 		//////////////////////////////////////////
 		
 		// select algorithm //////////
-		// *switch goes here*
+		switch(algorithm) {
+			// bubblesort
+			case "bs":
+				SortingAlgorithms.bubblesort(arr, up);
+				printArray(arr);
+				break;
+			// selectionsort
+			case "ss":
+				SortingAlgorithms.selectionsort(arr, up);
+				printArray(arr);
+				break;
+			// insertion sort
+			case "is":
+				SortingAlgorithms.insertionsort(arr, up);
+				printArray(arr);
+				break;
+			// heapsort
+			case "hs":
+				SortingAlgorithms.heapsort(arr, up);
+				printArray(arr);
+				break;
+			// quicksort
+			case "qs":
+				SortingAlgorithms.quicksort(arr, 0, arr.length, up);
+				printArray(arr);
+				break;
+			// mergesort
+			case "ms":
+				printArray(arr);
+				break;
+			// countingsort
+			case "cs":
+				printArray(arr);
+				break;
+			// radixsort
+			case "rs":
+				printArray(arr);
+				break;
+		}
 		//////////////////////////////
 		
 	}
