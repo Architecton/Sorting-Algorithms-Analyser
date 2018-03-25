@@ -1,6 +1,15 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
+// deadline: 8.4.2018
+
+// todo: 26.3.2018 - add countingsort algorithm
+// todo: 27.3.2018 - add radixsort algorithm
+// todo: 28.3.2018 - add sub-counters
+// todo: 28.3.2018 - add trace to bs
+// todo: 29.3.2018 - add trace to is
+// todo: 30.3.2018 - add trace to qs
+
 public class SortingAlgorithmsExamples {
 	// This program should accept 3 arguments and an optional 4. argument
 	// The first argument specifies whether to print the number of swaps performed or the trace of the sort
