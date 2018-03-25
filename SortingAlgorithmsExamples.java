@@ -16,6 +16,10 @@ public class SortingAlgorithmsExamples {
 		String outputAction = args[0];
 		String algorithm = args[1];
 		String sortDirection = args[2];
+		boolean up = false;
+		if(sortDirection.equals("up")) {
+			up = true;
+		}
 		if(args.length == 4) {
 			arrLength = Integer.parseInt(args[3]);
 		}
@@ -42,6 +46,10 @@ public class SortingAlgorithmsExamples {
 		printArray(arr);
 		//////////////////////////////////////////
 		
+		// select algorithm //////////
+		// *switch goes here*
+		//////////////////////////////
+		
 	}
 
 	// printArray: prints array of integers arr
@@ -65,11 +73,11 @@ class dataGenerator {
 }
 
 class SortingAlgorithms {
-	
+	// static variable for keeping track of number of swaps performed
 	public static long swapCounter;
 	
 	// quicksort: perform the quicksort algorithm on array of integers arr on index interval [leftBound, rightBound]
-	public static void quicksort(int[] arr, int leftBound, int rightBound) {
+	public static void quicksort(int[] arr, int leftBound, int rightBound, boolean up) {
 		if(leftBound >= rightBound) {
 			return;
 		}
@@ -82,11 +90,11 @@ class SortingAlgorithms {
 		// while pointers have not met
 		while(l <= r) {
 			// while value pointed to by l is smaller than pivot, move pointer left
-			while(arr[l] < pivot) {
+			while((up) ? arr[l] < pivot : arr[l] > pivot) {
 				l++;
 			}
 			// while vale pointed to by l is smaller than pivot, move pointer right
-			while(arr[r] > pivot) {
+			while((up) ? arr[r] > pivot : arr[r] < pivot) {
 				r--;
 			}
 			// if l and r have not crossed
@@ -99,53 +107,53 @@ class SortingAlgorithms {
 			}
 		}
 		// recursive call for section of array with values smaller than pivot
-		quicksort(arr, leftBound, r);
+		quicksort(arr, leftBound, r, up);
 		// recursive call for section of array with values larger or equal to pivot
-		quicksort(arr, l, rightBound);
+		quicksort(arr, l, rightBound, up);
 	}
 	// heapsort: performs the heapsort sorting algorithm on the array arr
-	public static void heapsort(int[] arr) {
+	public static void heapsort(int[] arr, boolean up) {
 		// start with first node with children and recursively build array representation of heap
 		for(int i = arr.length/2 - 1; i >= 0; i--) {
-			heapify(arr, i, arr.length);
+			heapify(arr, i, arr.length, up);
 		}
 		// move root of heap to end of array and fix heap
 		for(int i = arr.length - 1; i >= 0; i--) {
 			swap(arr, 0, i);
-			heapify(arr, 0, i);
+			heapify(arr, 0, i, up);
 		}
 	}
 
 	// heapify: auxilliary method for recursively building the array representation of a heap
-	private static void heapify(int[] arr, int rootIndex, int rightBound) {
-		// initialize pointers to root (assumed largest), left child of root and right child of roots
-		int largest = rootIndex;
+	private static void heapify(int[] arr, int rootIndex, int rightBound, boolean up) {
+		// initialize pointers to root (assumed critical), left child of root and right child of roots
+		int critical = rootIndex;
 		int leftChild = 2*rootIndex + 1;
 		int rightChild = 2*rootIndex + 2;
 
-		// check if any child is than root and let largest point to largest child
-		if(leftChild < rightBound && arr[leftChild] > arr[largest]) {
-			largest = leftChild;
+		// check if any child is than root and let critical point to critical child
+		if(leftChild < rightBound && (up) ? arr[leftChild] > arr[critical] : arr[leftChild] < arr[critical]) {
+			critical = leftChild;
 		}
-		if(rightChild < rightBound && arr[rightChild] > arr[largest]) {
-			largest = rightChild;
+		if(rightChild < rightBound && (up) ? arr[rightChild] > arr[critical] : arr[rightChild] < arr[critical]) {
+			critical = rightChild;
 		}
-		// if root is not largest, swap and recursively fix heap with root at largest child
-		if(largest != rootIndex) {
-			swap(arr, largest, rootIndex);
-			heapify(arr, largest, rightBound);
+		// if root is not critical, swap and recursively fix heap with root at critical child
+		if(critical != rootIndex) {
+			swap(arr, critical, rootIndex);
+			heapify(arr, critical, rightBound, up);
 		}
 	}
 
 	// insertionsort: performs the insertionsort algorithm on the array pointed to by arr
-	public static void insertionsort(int[] arr) {
+	public static void insertionsort(int[] arr, boolean up) {
 		// assume first element is sorted
 		// iterate over array on [1, arr.length - 1]
 		for(int i = 1; i < arr.length; i++) {
 			// initialize new variable used for insertion
 			int j = i;
 			// while current element is larger than its predecessor
-			while(j > 0 && arr[j] < arr[j - 1]) {
+			while(j > 0 && (up) ? arr[j] < arr[j - 1] : arr[j] > arr[j - 1]) {
 				// swap the two elements and repeat for element originaly pointed to by i
 				swap(arr, j, j - 1);
 				j--;
@@ -154,11 +162,11 @@ class SortingAlgorithms {
 	}
 
 	// bubblesort: performs the basic bubblesort algorithm on the array pointed to by arr
-	public static void bubblesort(int[] arr) {
+	public static void bubblesort(int[] arr, boolean up) {
 		// go over pairs of elements and compare
 		for(int i = 0; i < arr.length; i++) {
 			for(int j = 0; j < arr.length - i - 1; j++) {
-				if(arr[j] > arr[j + 1]) {
+				if((up) ? arr[j] > arr[j + 1] : arr[j] < arr[j + 1]) {
 					// if next value in array is smaller, swap
 					swap(arr, j, j+1);
 				}
@@ -167,23 +175,23 @@ class SortingAlgorithms {
 	}
 
 	// selectionsort: performs the selectionsort algorithm on the array pointed to by arr
-	public static void selectionsort(int[] arr) {
+	public static void selectionsort(int[] arr, boolean up) {
 		// outer loop is at boundary of sorted and unsorted part
 		for(int i = 0; i < arr.length - 1; i++) {
 			// save assumed minimum value and its index
-			int min = arr[i];
-			int indexMin = i;
+			int critical = arr[i];
+			int indexCritical = i;
 
 			// go over unsorted part and check if any values are smaller than assumed minimum
 			for(int j = i + 1; j < arr.length; j++) {
-				if(arr[j] < min) {
-					min = arr[j];
-					indexMin = j;
+				if((up) ? arr[j] < critical : arr[j] > critical) {
+					critical = arr[j];
+					indexCritical = j;
 				}
 			}
 			// if smaller value found, put in sorted section
-			if(i != indexMin) {
-				swap(arr, i, indexMin);
+			if(i != indexCritical) {
+				swap(arr, i, indexCritical);
 			}
 		}
 	}
