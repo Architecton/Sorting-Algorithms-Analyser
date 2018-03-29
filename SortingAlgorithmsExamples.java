@@ -3,12 +3,10 @@ import java.util.ArrayList;
 
 // deadline: 8.4.2018
 
-// todo: 26.3.2018 - add countingsort algorithm
-// todo: 27.3.2018 - add radixsort algorithm
-// todo: 28.3.2018 - add sub-counters
-// todo: 28.3.2018 - add trace to bs
-// todo: 29.3.2018 - add trace to is
-// todo: 30.3.2018 - add trace to qs
+// todo: 29.3.2018 - add bubblesort algorithm
+// todo: 30.3.2018 - add mergesort algorithm
+// todo: 31.3.2018 - add trace to mergesort and bubblesort algorithms
+// todo: 1.4.2018 - add counters to all algorithms
 
 public class SortingAlgorithmsExamples {
 	// This program should accept 3 arguments and an optional 4. argument
@@ -23,6 +21,10 @@ public class SortingAlgorithmsExamples {
 		// parse arguments /////////
 		int arrLength = -1;
 		String outputAction = args[0];
+		boolean trace = false;
+		if(outputAction.equals("trace")) {
+			trace = true;
+		}
 		String algorithm = args[1];
 		String sortDirection = args[2];
 		boolean up = false;
@@ -51,47 +53,126 @@ public class SortingAlgorithmsExamples {
 			}
 			arr = temp.stream().mapToInt(i -> i).toArray();
 		}
-		// test print of parsed arr //////////////
-		printArray(arr);
-		//////////////////////////////////////////
 		
 		// select algorithm //////////
 		switch(algorithm) {
 			// bubblesort
 			case "bs":
-				SortingAlgorithms.bubblesort(arr, up);
+				if(!trace) {
+					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
+					SortingAlgorithms.bubblesort(arr, up, trace);
+					System.out.printf("%d %d\n", SortingAlgorithms.compCounter, SortingAlgorithms.asnCounter);
+					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
+					SortingAlgorithms.bubblesort(arr, up, trace);
+					System.out.printf("%d %d\n", SortingAlgorithms.compCounter, SortingAlgorithms.asnCounter);
+					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
+					SortingAlgorithms.bubblesort(arr, !up, trace);
+					System.out.printf("%d %d\n", SortingAlgorithms.compCounter, SortingAlgorithms.asnCounter);
+					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
+				} else {
+					SortingAlgorithms.bubblesort(arr, up, trace);
+				}
 				printArray(arr);
+
 				break;
 			// selectionsort
 			case "ss":
-				SortingAlgorithms.selectionsort(arr, up);
+				if(!trace) {
+					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
+					SortingAlgorithms.selectionsort(arr, up, trace);
+					System.out.printf("%d %d\n", SortingAlgorithms.compCounter, SortingAlgorithms.asnCounter);
+					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
+					SortingAlgorithms.selectionsort(arr, up, trace);
+					System.out.printf("%d %d\n", SortingAlgorithms.compCounter, SortingAlgorithms.asnCounter);
+					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
+					SortingAlgorithms.selectionsort(arr, !up, trace);
+					System.out.printf("%d %d\n", SortingAlgorithms.compCounter, SortingAlgorithms.asnCounter);
+					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
+				} else {
+					SortingAlgorithms.selectionsort(arr, up, trace);
+				}
 				printArray(arr);
 				break;
 			// insertion sort
 			case "is":
-				SortingAlgorithms.insertionsort(arr, up);
+				if(!trace) {
+					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
+					SortingAlgorithms.insertionsort(arr, up, trace);
+					System.out.printf("%d %d\n", SortingAlgorithms.compCounter, SortingAlgorithms.asnCounter);
+					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
+					SortingAlgorithms.insertionsort(arr, up, trace);
+					System.out.printf("%d %d\n", SortingAlgorithms.compCounter, SortingAlgorithms.asnCounter);
+					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
+					SortingAlgorithms.insertionsort(arr, !up, trace);
+					System.out.printf("%d %d\n", SortingAlgorithms.compCounter, SortingAlgorithms.asnCounter);
+					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
+				} else {
+					SortingAlgorithms.insertionsort(arr, up, trace);
+				}
 				printArray(arr);
 				break;
 			// heapsort
 			case "hs":
-				SortingAlgorithms.heapsort(arr, up);
+				if(!trace) {
+					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
+					SortingAlgorithms.heapsort(arr, up, trace);
+					System.out.printf("%d %d\n", SortingAlgorithms.compCounter, SortingAlgorithms.asnCounter - 3);
+					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
+					SortingAlgorithms.heapsort(arr, up, trace);
+					System.out.printf("%d %d\n", SortingAlgorithms.compCounter, SortingAlgorithms.asnCounter - 3);
+					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
+					SortingAlgorithms.heapsort(arr, !up, trace);
+					System.out.printf("%d %d\n", SortingAlgorithms.compCounter, SortingAlgorithms.asnCounter - 3);
+					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
+				} else {
+					SortingAlgorithms.heapsort(arr, up, trace);
+				}
 				printArray(arr);
 				break;
 			// quicksort
 			case "qs":
-				SortingAlgorithms.quicksort(arr, 0, arr.length - 1, up);
+				if(!trace) {
+					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
+					SortingAlgorithms.quicksort(arr, 0, arr.length - 1,  up, trace);
+					System.out.printf("%d %d\n", SortingAlgorithms.compCounter, SortingAlgorithms.asnCounter);
+					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
+					SortingAlgorithms.quicksort(arr, 0, arr.length - 1, up, trace);
+					System.out.printf("%d %d\n", SortingAlgorithms.compCounter, SortingAlgorithms.asnCounter);
+					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
+					SortingAlgorithms.quicksort(arr, 0, arr.length - 1, !up, trace);
+					System.out.printf("%d %d\n", SortingAlgorithms.compCounter, SortingAlgorithms.asnCounter);
+					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
+				} else {
+					SortingAlgorithms.quicksort(arr, 0, arr.length - 1, up, trace);
+				}
 				printArray(arr);
 				break;
 			// mergesort
 			case "ms":
+				if(!trace) {
+					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
+					SortingAlgorithms.mergesort(arr, 0, arr.length - 1, up);
+					System.out.printf("%d %d\n", SortingAlgorithms.compCounter, SortingAlgorithms.asnCounter);
+					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
+					SortingAlgorithms.mergesort(arr, 0, arr.length - 1, up);
+					System.out.printf("%d %d\n", SortingAlgorithms.compCounter, SortingAlgorithms.asnCounter);
+					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
+					SortingAlgorithms.mergesort(arr, 0, arr.length - 1, up);
+					System.out.printf("%d %d\n", SortingAlgorithms.compCounter, SortingAlgorithms.asnCounter);
+					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
+				} else {
+					SortingAlgorithms.mergesort(arr, 0, arr.length - 1, up);
+				}
 				printArray(arr);
 				break;
 			// countingsort
 			case "cs":
+				arr = SortingAlgorithms.countingsort(arr, up, trace);
 				printArray(arr);
 				break;
 			// radixsort
 			case "rs":
+				arr = SortingAlgorithms.radixsort(arr, up, trace);
 				printArray(arr);
 				break;
 		}
@@ -107,28 +188,17 @@ public class SortingAlgorithmsExamples {
 	}
 }
 
-// dataGenerator: used to generate data used for algorithm testing
-class dataGenerator {
-	// generateUnsortedArray: generate array of evenly distributed random integers on [min, max]
-	public static int[] generateUnsortedArray(int length, int min, int max) {
-		int[] arr = new int[length];
-		for(int i = 0; i < arr.length; i++) {
-			arr[i] = min + (int)(Math.random() * ((max - min) + 1));
-		}
-		return arr;
-	}
-}
-
 class SortingAlgorithms {
 	// static variable for keeping track of number of swaps performed
-	public static long swapCounter;
+	public static long compCounter, asnCounter;
 	
 	// quicksort: perform the quicksort algorithm on array of integers arr on index interval [leftBound, rightBound]
-	public static void quicksort(int[] arr, int leftBound, int rightBound, boolean up) {
+	public static void quicksort(int[] arr, int leftBound, int rightBound, boolean up, boolean trace) {
 		if(leftBound >= rightBound) {
 			return;
 		}
 		// choose middle element as the pivot value
+		asnCounter++;
 		int pivot = arr[(leftBound + rightBound)/2];
 		// Set left and right pointers
 		int l = leftBound;
@@ -137,35 +207,43 @@ class SortingAlgorithms {
 		// while pointers have not met
 		while(l <= r) {
 			// while value pointed to by l is smaller/larger than pivot, move pointer left
+			compCounter++;
 			while((up) ? arr[l] < pivot : arr[l] > pivot) {
+				compCounter++;
 				l++;
 			}
 			// while vale pointed to by r is larger/smaller than pivot, move pointer right
+			compCounter++;
 			while((up) ? arr[r] > pivot : arr[r] < pivot) {
+				compCounter++;
 				r--;
 			}
 			// if l and r have not crossed
 			if(l <= r) {
 				// swap elements pointed to by l and r
+				asnCounter += 3;
 				swap(arr, l, r);
 				// move l one element to the right and r one element to the left
 				l++;
 				r--;
 			}
 		}
+		if(trace){quicksortTrace(arr, leftBound, rightBound, l, r);}
 		// recursive call for section of array with values smaller than pivot
-		quicksort(arr, leftBound, r, up);
+		quicksort(arr, leftBound, r, up, trace);
 		// recursive call for section of array with values larger or equal to pivot
-		quicksort(arr, l, rightBound, up);
+		quicksort(arr, l, rightBound, up, trace);
 	}
 	// heapsort: performs the heapsort sorting algorithm on the array arr
-	public static void heapsort(int[] arr, boolean up) {
+	public static void heapsort(int[] arr, boolean up, boolean trace) {
 		// start with first node with children and recursively build array representation of heap
 		for(int i = arr.length/2 - 1; i >= 0; i--) {
 			heapify(arr, i, arr.length, up);
 		}
 		// move root of heap to end of array and fix heap
 		for(int i = arr.length - 1; i >= 0; i--) {
+			if(trace){heapsortTrace(arr, i);}
+			asnCounter += 3;
 			swap(arr, 0, i);
 			heapify(arr, 0, i, up);
 		}
@@ -179,50 +257,58 @@ class SortingAlgorithms {
 		int rightChild = 2*rootIndex + 2;
 
 		// check if any child is more critical than root let critical point to critical child
-		if(leftChild < rightBound && ((up) ? arr[leftChild] > arr[critical] : arr[leftChild] < arr[critical])) {
+		if(leftChild < rightBound && ++compCounter >= 0 && ((up) ? arr[leftChild] > arr[critical] : arr[leftChild] < arr[critical])) {
 			critical = leftChild;
 		}
-		if(rightChild < rightBound && ((up) ? arr[rightChild] > arr[critical] : arr[rightChild] < arr[critical])) {
+		if(rightChild < rightBound && ++compCounter >= 0 && ((up) ? arr[rightChild] > arr[critical] : arr[rightChild] < arr[critical])) {
 			critical = rightChild;
 		}
 		// if root is not critical, swap and recursively fix heap with root at critical child
 		if(critical != rootIndex) {
+			asnCounter += 3;
 			swap(arr, critical, rootIndex);
 			heapify(arr, critical, rightBound, up);
 		}
 	}
 
 	// insertionsort: performs the insertionsort algorithm on the array pointed to by arr
-	public static void insertionsort(int[] arr, boolean up) {
+	public static void insertionsort(int[] arr, boolean up, boolean trace) {
 		// assume first element is sorted
 		// iterate over array on [1, arr.length - 1]
+		if(trace){insertionsortTrace(arr, -1);}
 		for(int i = 1; i < arr.length; i++) {
 			// initialize new variable used for insertion
 			int j = i;
 			// while current element is larger than its predecessor
-			while(j > 0 && ((up) ? arr[j] < arr[j - 1] : arr[j] > arr[j - 1])) {
+			while(j > 0 && ++compCounter >= 0 && ((up) ? arr[j] < arr[j - 1] : arr[j] > arr[j - 1])) {
 				// swap the two elements and repeat for element originaly pointed to by i
+				asnCounter += 3;
 				swap(arr, j, j - 1);
 				j--;
 			}
+			if(trace){insertionsortTrace(arr, i);}
 		}
 	}
 
 	// bubblesort: performs the basic bubblesort algorithm on the array pointed to by arr
-	public static void bubblesort(int[] arr, boolean up) {
-		// go over pairs of elements and compare
+	public static void bubblesort(int[] arr, boolean up, boolean trace) {
+		int edge = 1;
 		for(int i = 0; i < arr.length; i++) {
-			for(int j = 0; j < arr.length - i - 1; j++) {
-				if((up) ? arr[j] > arr[j + 1] : arr[j] < arr[j + 1]) {
-					// if next value in array is smaller, swap
-					swap(arr, j, j+1);
+			if(trace){bubblesortTrace(arr, edge);}
+			for(int j = arr.length - 1; j >= edge; j--) {
+				compCounter++;
+				if((up) ? arr[j] < arr[j - 1] : arr[j] > arr[j - 1]) {
+					asnCounter += 3;
+					swap(arr, j, j - 1);
 				}
 			}
+			edge++;
 		}
 	}
 
 	// selectionsort: performs the selectionsort algorithm on the array pointed to by arr
-	public static void selectionsort(int[] arr, boolean up) {
+	public static void selectionsort(int[] arr, boolean up, boolean trace) {
+	    if(trace) {selectionsortTrace(arr, -1);}
 		// outer loop is at boundary of sorted and unsorted part
 		for(int i = 0; i < arr.length - 1; i++) {
 			// save assumed critical value and its index
@@ -231,16 +317,195 @@ class SortingAlgorithms {
 
 			// go over unsorted part and check if any values are smaller than assumed critical
 			for(int j = i + 1; j < arr.length; j++) {
+				compCounter++;
 				if((up) ? arr[j] < critical : arr[j] > critical) {
 					critical = arr[j];
 					indexCritical = j;
 				}
 			}
 			// if smaller value found, put in sorted section
-			if(i != indexCritical) {
-				swap(arr, i, indexCritical);
-			}
+			asnCounter +=3;
+			swap(arr, i, indexCritical);
+			if(trace){selectionsortTrace(arr, i);}
 		}
+	}
+	
+	// count_sort: performs the countsort algorithm on an array of single digit integers pointed to by arr
+	public static int[] countingsort(int[] arr, boolean up, boolean trace) {
+
+		// initialize array that will hold the sorted array
+	   	int[] sortedArr = new int[arr.length];
+
+	    // create array with indices corresponding to numbers on [0,9]
+	    int[] count = new int[256];
+
+	    // count each number in the array that is being sorted
+	    for(int i = 0; i < arr.length; i++) {
+	        count[arr[i]]++;
+	    }
+
+	    // compute the cumulative sums
+	    for(int i = 1; i < count.length; i++) {
+	        count[i] += count[i - 1];
+	    }
+	    if(trace){countingsortTrace(count);}
+
+	    // build sorted array
+	    // go over initial array in reverse
+	    for(int i = arr.length - 1; i >= 0; i--) {
+	        // get last value in the array that is being sorted
+	        int value = arr[i];
+	        // the cumulative sum represents index + 1 of the current value
+	        int place = count[value];
+	        // put value in sorted array
+	        sortedArr[(up) ? (place - 1) : sortedArr.length - place] = value;
+	        // subtract from cumulative count
+	        count[value]--;
+	    }
+	    
+	   	// return the array that was sorted
+	   	return sortedArr;
+	}
+
+	// countsortAux: performs the countsort algorithm on array of integers pointed to by arr
+	// the array sorts the digit at decimalplace decPlace (which increment as 1, 10, 100,... and NOT 1, 2, 3,...)
+	public static int[] countsortAux(int[] arr, int[] mask, boolean up, boolean trace) {
+
+	    // allocate memory to the array that will hold the sorted array
+	    int[] sortedArr = new int[arr.length];
+
+	    // create array with indices corresponding to numbers on [0,9]
+	    // set all elements to 0
+	    int[] count = new int[256];
+
+	    // count each digit at the specified decimal place in the array that is being sorted
+	    for(int i = 0; i < arr.length; i++) {
+	        count[(arr[i] & mask[0]) >> mask[1]]++;
+	    }
+
+	    // compute the cumulative sums
+	    for(int i = 1; i < count.length; i++) {
+	        count[i] += count[i - 1];
+	    }
+	    if(trace){countingsortTrace(count);}
+	    // build sorted array
+	    // go over initial array in reverse
+	    for(int i = arr.length - 1; i >= 0; i--) {
+	        // get last value in the array that is being sorted
+	        int value = (arr[i] & mask[0]) >> mask[1];
+	        // the cumulative sum represents index + 1 of the current value
+	        int place = count[value];
+	        // put value in sorted array
+	        sortedArr[(up) ? (place - 1) : (arr.length - place)] = arr[i];
+	        // subtract from cumulative count
+	        count[value]--;
+	    }    
+	    return sortedArr;
+	}
+
+	// TODO: add sorting by bytes
+	// radixsort - performs the radixsort sorting algorithm on array pointed to by arr
+	public static int[] radixsort(int[] arr, boolean up, boolean trace) {
+	    // Find the maximum number to know number of digits
+	    int max = getMax(arr);
+	    int[][] masks = {{0x000000FF, 0}, {0x0000FF00, 8}, {0x00FF0000, 16}, {0xFF000000, 24}};
+	    // Perform countsort on incrementing digit positions
+	    for(int maskIndex = 0; maskIndex < masks.length; maskIndex++) {
+	        arr = countsortAux(arr, masks[maskIndex], up, trace);
+	        if(true){radixsortTrace(arr);}
+	    }
+	    return arr;
+	}
+
+	// getMax: returns the maximum element in the array pointed to by arr
+	public static int getMax(int[] arr) {
+	    int max = arr[0];
+	    for (int i = 1; i < arr.length; i++) {
+	        if (arr[i] > max){
+	            max = arr[i];
+	        }
+	    }
+	    return max;
+	}
+
+	// merge: merges two subarrays of arr
+	// the first subarray is arr[left..m]
+	// the second subarray is arr[m + 1..right]
+	public static void merge(int[] arr, int left, int m, int right, boolean up) {
+	    // define indices
+	    int i, j, k;
+	    // subarray_l_length := size of the first subarray
+	    int subarray_l_length = m - left + 1;
+	    // subarray_r_length := size of the second subarray
+	    int subarray_r_length =  right - m;
+	 
+	    // create temp arrays with lengths subarray_l_length and subarray_r_length
+	    int[] L = new int[subarray_l_length];
+	    int[] R = new int[subarray_r_length];
+	 
+	    // copy the subarrays into respective temp arrays
+	    for(i = 0; i < subarray_l_length; i++) {
+	        L[i] = arr[left + i];
+	    }
+	    for(i = 0; i < subarray_r_length; i++) {
+	        R[i] = arr[m + 1 + i];
+	    }
+	 
+	    // i is the starting index of the first subarray
+	    i = 0;
+	    // j is the starting index of the second subarray
+	    j = 0;
+	    // k is the starting index of the merged subarray
+	    k = left;
+
+	    // while neither of the subarray indices has reached the respective subarray length
+	    while (i < subarray_l_length && j < subarray_r_length) {
+	        // compare values in the temp subarrays and merge into the main array
+	        compCounter++;
+	        if((up) ? L[i] <= R[j] : L[i] >= R[j]) {
+	        	asnCounter++;
+	            arr[k] = L[i];
+	            i++;
+	        } else {
+	        	asnCounter++;
+	            arr[k] = R[j];
+	            j++;
+	        }
+	        // increment the index of the main array that is being merged into
+	        k++;
+	    }
+	 
+	    // copy the remainder of elements from L to the main array (if it exists)
+	    while (i < subarray_l_length) {
+	    	asnCounter++;
+	        arr[k] = L[i];
+	        i++;
+	        k++;
+	    }
+	 
+	    // copy the remainder of elements from L to the main array (if it exists)
+	    while (j < subarray_r_length) {
+	    	asnCounter++;
+	        arr[k] = R[j];
+	        j++;
+	        k++;
+	    }
+	}
+
+	// mergesort: sorts the values in the array pointed to by arr using the mergesort algorithm
+	public static void mergesort(int[] arr, int left, int right, boolean up) {
+	    if(left < right) {
+	        // compute the middle index
+	    	asnCounter++;
+	        int m = left + (right - left)/2;
+
+	        // recursive call for the left and right subarrays
+	        mergesort(arr, left, m, up);
+	        mergesort(arr, m + 1, right, up);
+	 
+	        // merge the two subarrays
+	        merge(arr, left, m, right, up);
+	    }
 	}
 
 	// swap: swaps elements at index1 and index2 in array arr
@@ -248,6 +513,110 @@ class SortingAlgorithms {
 		int temp = arr[index1];
 		arr[index1] = arr[index2];
 		arr[index2] = temp;
-		SortingAlgorithms.swapCounter++;
+	}
+
+	public static void heapsortTrace(int[] arr, int printLen) {
+		int barIndex = 1;
+		int printCounter = 0;
+		for(int i = 0; i <= printLen; i++) {
+			System.out.printf((i == printLen) ? "%d\n" : "%d ", arr[i]);
+			printCounter++;
+			if((i != printLen) && printCounter == barIndex) {
+				System.out.printf("| ");
+				barIndex *= 2;
+				printCounter = 0;
+			}
+		}
+	}
+
+	// selectionsortTrace: auxilliary method for printing the trace of the selectionsort algorithm
+	public static void selectionsortTrace(int[] arr, int loopIndex) {
+	    // if loopIndex contains signal for initial print of unsorted array (-1)
+	    // print initial bar (array state before performing selectionsort)
+	    if(loopIndex == -1) {
+	        System.out.printf("| ");
+	        for(int i = 0; i < arr.length; i++) {
+	            System.out.printf((i == arr.length - 1) ? "%d\n" : "%d ", arr[i]);
+	        }
+	    // else print array and insert vertical bar at the correct place (can be expressed in terms of the loop index)
+	    } else {
+	        for(int i = 0; i < arr.length; i++) {
+	            System.out.printf((i == arr.length - 1) ? "%d" : "%d ", arr[i]);
+	            if(i == loopIndex) {
+	                System.out.printf((i == arr.length - 1) ? " |" : "| ");
+	            }
+	            // print newline after printign the array
+	            if(i == arr.length - 1) {
+	                System.out.println();
+	            }
+	        }
+	    } 
+	}
+
+	// insertionsortTrace: auxilliary method for printing the trace of the selectionsort algorithm
+	public static void insertionsortTrace(int[] arr, int loopIndex) {
+	    // if loopIndex contains signal for initial print of unsorted array (-1)
+	    // print initial bar (array state before performing selectionsort)
+	    if(loopIndex == -1) {
+	    	System.out.printf("%d |", arr[0]);
+	    	if(arr.length == 1) {System.out.println();}
+	        for(int i = 1; i < arr.length; i++) {
+
+	            System.out.printf((i == arr.length - 1) ? " %d\n" : " %d", arr[i]);
+	        }
+	    // else print array and insert vertical bar at the correct place (can be expressed in terms of the loop index)
+	    } else {
+	        for(int i = 0; i < arr.length; i++) {
+	            System.out.printf((i == arr.length - 1) ? "%d" : "%d ", arr[i]);
+	            if(i == loopIndex) {
+	                System.out.printf((i == arr.length - 1) ? " |" : "| ");
+	            }
+	            // print newline after printign the array
+	            if(i == arr.length - 1) {
+	                System.out.println();
+	            }
+	        }
+	    } 
+	}
+
+	public static void countingsortTrace(int[] count) {
+		for(int i = 0; i < count.length; i++) {
+			System.out.printf((i == count.length - 1) ? "%d\n" : "%d ", count[i]);
+		}
+	}
+
+	public static void radixsortTrace(int[] arr) {
+		for(int i = 0; i < arr.length; i++) {
+			System.out.printf((i == arr.length - 1) ? "%d\n" : "%d ", arr[i]);
+		}	
+	}
+
+	public static void quicksortTrace(int[] arr, int leftBound, int rightBound, int l, int r) {
+		int spacing = Math.abs(r - l);
+		int printCounter = 0;
+		boolean countPrints = false;
+		for(int i = leftBound; i <= rightBound; i++) {
+			if(i == l - 1) {
+				System.out.printf("| ");
+				countPrints = true;
+			}
+			if(countPrints) {
+				printCounter++;
+				if(printCounter == spacing) {
+					System.out.printf("| ");
+					countPrints = false;
+				}
+			}
+			System.out.printf((i == rightBound) ? "%d\n" : "%d ", arr[i]);
+		}
+	}
+
+	public static void bubblesortTrace(int[] arr, int edge) {
+		for(int i = 0; i < arr.length; i++) {
+			if(edge - 1 == i) {
+				System.out.printf("| ");
+			}
+			System.out.printf((i == arr.length - 1) ? "%d\n" : "%d ", arr[i]);
+		}
 	}
 }
