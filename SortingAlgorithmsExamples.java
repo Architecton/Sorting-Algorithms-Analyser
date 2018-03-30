@@ -151,17 +151,17 @@ public class SortingAlgorithmsExamples {
 			case "ms":
 				if(!trace) {
 					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
-					SortingAlgorithms.mergesort(arr, 0, arr.length - 1, up);
-					System.out.printf("%d %d\n", SortingAlgorithms.compCounter, SortingAlgorithms.asnCounter);
+					SortingAlgorithms.mergesort(arr, 0, arr.length - 1, up, trace);
+					System.out.printf("%d %d\n", SortingAlgorithms.compCounter, SortingAlgorithms.asnCounter + 1);
 					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
-					SortingAlgorithms.mergesort(arr, 0, arr.length - 1, up);
-					System.out.printf("%d %d\n", SortingAlgorithms.compCounter, SortingAlgorithms.asnCounter);
+					SortingAlgorithms.mergesort(arr, 0, arr.length - 1, up, trace);
+					System.out.printf("%d %d\n", SortingAlgorithms.compCounter, SortingAlgorithms.asnCounter + 1);
 					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
-					SortingAlgorithms.mergesort(arr, 0, arr.length - 1, up);
-					System.out.printf("%d %d\n", SortingAlgorithms.compCounter, SortingAlgorithms.asnCounter);
+					SortingAlgorithms.mergesort(arr, 0, arr.length - 1, up, trace);
+					System.out.printf("%d %d\n", SortingAlgorithms.compCounter, SortingAlgorithms.asnCounter + 1);
 					SortingAlgorithms.compCounter = SortingAlgorithms.asnCounter = 0;
 				} else {
-					SortingAlgorithms.mergesort(arr, 0, arr.length - 1, up);
+					SortingAlgorithms.mergesort(arr, 0, arr.length - 1, up, trace);
 				}
 				printArray(arr);
 				break;
@@ -431,44 +431,34 @@ class SortingAlgorithms {
 	// merge: merges two subarrays of arr
 	// the first subarray is arr[left..m]
 	// the second subarray is arr[m + 1..right]
-	public static void merge(int[] arr, int left, int m, int right, boolean up) {
+	public static void merge(int[] arr, int left, int m, int right, boolean up, boolean trace) {
 	    // define indices
 	    int i, j, k;
 	    // subarray_l_length := size of the first subarray
 	    int subarray_l_length = m - left + 1;
 	    // subarray_r_length := size of the second subarray
 	    int subarray_r_length =  right - m;
-	 
-	    // create temp arrays with lengths subarray_l_length and subarray_r_length
-	    int[] L = new int[subarray_l_length];
-	    int[] R = new int[subarray_r_length];
-	 
-	    // copy the subarrays into respective temp arrays
-	    for(i = 0; i < subarray_l_length; i++) {
-	        L[i] = arr[left + i];
-	    }
-	    for(i = 0; i < subarray_r_length; i++) {
-	        R[i] = arr[m + 1 + i];
-	    }
-	 
+
+		int[] merged = new int[right - left + 1];
+		
 	    // i is the starting index of the first subarray
-	    i = 0;
+	    i = left;
 	    // j is the starting index of the second subarray
-	    j = 0;
+	    j = m + 1;
 	    // k is the starting index of the merged subarray
-	    k = left;
+	    k = 0;
 
 	    // while neither of the subarray indices has reached the respective subarray length
-	    while (i < subarray_l_length && j < subarray_r_length) {
+	    while (i <= m && j <= right) {
 	        // compare values in the temp subarrays and merge into the main array
 	        compCounter++;
-	        if((up) ? L[i] <= R[j] : L[i] >= R[j]) {
+	        if((up) ? arr[i] <= arr[j] : arr[i] >= arr[j]) {
 	        	asnCounter++;
-	            arr[k] = L[i];
+				merged[k] = arr[i];
 	            i++;
 	        } else {
 	        	asnCounter++;
-	            arr[k] = R[j];
+				merged[k] = arr[j];
 	            j++;
 	        }
 	        // increment the index of the main array that is being merged into
@@ -476,35 +466,45 @@ class SortingAlgorithms {
 	    }
 	 
 	    // copy the remainder of elements from L to the main array (if it exists)
-	    while (i < subarray_l_length) {
+	    while (i <= m) {
 	    	asnCounter++;
-	        arr[k] = L[i];
+			merged[k] = arr[i];
 	        i++;
 	        k++;
 	    }
 	 
 	    // copy the remainder of elements from L to the main array (if it exists)
-	    while (j < subarray_r_length) {
+	    while (j <= right) {
 	    	asnCounter++;
-	        arr[k] = R[j];
+	        merged[k] = arr[j];
 	        j++;
 	        k++;
 	    }
+	
+		if(trace){mergesortTrace_merge(merged);}
+		int s = 0;
+		for(int l = left; l <= right; l++) {
+			arr[l] = merged[s];
+			s++;
+		}
 	}
 
 	// mergesort: sorts the values in the array pointed to by arr using the mergesort algorithm
-	public static void mergesort(int[] arr, int left, int right, boolean up) {
+	public static void mergesort(int[] arr, int left, int right, boolean up, boolean trace) {
 	    if(left < right) {
 	        // compute the middle index
 	    	asnCounter++;
-	        int m = left + (right - left)/2;
-
+	        int m = (right + left)/2;
+			
+			if(trace){mergesortTrace_split(arr, left, right, m);}
+			
 	        // recursive call for the left and right subarrays
-	        mergesort(arr, left, m, up);
-	        mergesort(arr, m + 1, right, up);
-	 
+	        mergesort(arr, left, m, up, trace);
+	        mergesort(arr, m + 1, right, up, trace);
+			
 	        // merge the two subarrays
-	        merge(arr, left, m, right, up);
+			merge(arr, left, m, right, up, trace);
+	        
 	    }
 	}
 
@@ -617,6 +617,21 @@ class SortingAlgorithms {
 				System.out.printf("| ");
 			}
 			System.out.printf((i == arr.length - 1) ? "%d\n" : "%d ", arr[i]);
+		}
+	}
+	
+	public static void mergesortTrace_merge(int[] arr) {
+		for(int i = 0; i < arr.length; i++) {
+			System.out.printf((i == arr.length - 1) ? "%d\n" : "%d ", arr[i]);
+		}
+	}
+	
+	public static void mergesortTrace_split(int[] arr, int left, int right, int m) {
+		for(int i = left; i <= right; i++) {
+			System.out.printf((i == right) ? "%d\n" : "%d ", arr[i]);
+			if(i == m) {
+				System.out.printf("| ");
+			}
 		}
 	}
 }
