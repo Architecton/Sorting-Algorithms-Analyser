@@ -195,7 +195,6 @@ class SortingAlgorithms {
 		// Set left and right pointers
 		int l = leftBound;
 		int r = rightBound;
-
 		// while pointers have not met
 		while(l <= r) {
 			// while value pointed to by l is smaller/larger than pivot, move pointer left
@@ -220,6 +219,7 @@ class SortingAlgorithms {
 				r--;
 			}
 		}
+		 // System.out.printf("l == %d, r == %d, pivot == %d\n", l - leftBound, r - leftBound, pivot);
 		if(trace){quicksortTrace(arr, leftBound, rightBound, l, r);}
 		// recursive call for section of array with values smaller than pivot
 		quicksort(arr, leftBound, r, up, trace);
@@ -584,24 +584,17 @@ class SortingAlgorithms {
 	}
 
 	public static void quicksortTrace(int[] arr, int leftBound, int rightBound, int l, int r) {
-		int spacing = Math.abs(r - l);
-		int printCounter = 0;
-		boolean countPrints = false;
 		for(int i = leftBound; i <= rightBound; i++) {
-			if(i == l - 1) {
+			if(i == l) {
 				System.out.printf("| ");
-				countPrints = true;
 			}
-			if(countPrints) {
-				printCounter++;
-				if(printCounter == spacing) {
-					System.out.printf("| ");
-					countPrints = false;
-				}
+			if(i == r + 1) {
+				System.out.printf("| ");
 			}
 			System.out.printf((i == rightBound) ? "%d\n" : "%d ", arr[i]);
 		}
 	}
+
 
 	public static void bubblesortTrace(int[] arr, int edge) {
 		for(int i = 0; i < arr.length; i++) {
