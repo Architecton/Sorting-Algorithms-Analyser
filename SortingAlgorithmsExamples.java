@@ -72,8 +72,6 @@ public class SortingAlgorithmsExamples {
 				} else {
 					SortingAlgorithms.bubblesort(arr, up, trace);
 				}
-				printArray(arr);
-
 				break;
 			// selectionsort
 			case "ss":
@@ -91,7 +89,6 @@ public class SortingAlgorithmsExamples {
 				} else {
 					SortingAlgorithms.selectionsort(arr, up, trace);
 				}
-				printArray(arr);
 				break;
 			// insertion sort
 			case "is":
@@ -109,7 +106,6 @@ public class SortingAlgorithmsExamples {
 				} else {
 					SortingAlgorithms.insertionsort(arr, up, trace);
 				}
-				printArray(arr);
 				break;
 			// heapsort
 			case "hs":
@@ -127,7 +123,6 @@ public class SortingAlgorithmsExamples {
 				} else {
 					SortingAlgorithms.heapsort(arr, up, trace);
 				}
-				printArray(arr);
 				break;
 			// quicksort
 			case "qs":
@@ -145,7 +140,6 @@ public class SortingAlgorithmsExamples {
 				} else {
 					SortingAlgorithms.quicksort(arr, 0, arr.length - 1, up, trace);
 				}
-				printArray(arr);
 				break;
 			// mergesort
 			case "ms":
@@ -163,7 +157,6 @@ public class SortingAlgorithmsExamples {
 				} else {
 					SortingAlgorithms.mergesort(arr, 0, arr.length - 1, up, trace);
 				}
-				printArray(arr);
 				break;
 			// countingsort
 			case "cs":
@@ -173,7 +166,6 @@ public class SortingAlgorithmsExamples {
 			// radixsort
 			case "rs":
 				arr = SortingAlgorithms.radixsort(arr, up, trace);
-				printArray(arr);
 				break;
 		}
 		//////////////////////////////
@@ -183,7 +175,7 @@ public class SortingAlgorithmsExamples {
 	// printArray: prints array of integers arr
 	public static void printArray(int[] arr) {
 		for(int i = 0; i < arr.length; i++) {
-			System.out.printf((i == arr.length - 1) ? "%d%n" : "%d, ", arr[i]);
+			System.out.printf((i == arr.length - 1) ? "%d%n" : "%d ", arr[i]);
 		}
 	}
 }
